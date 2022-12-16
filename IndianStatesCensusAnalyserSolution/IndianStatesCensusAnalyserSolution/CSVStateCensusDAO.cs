@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IndianStatesCensusAnalyserSolution
 {
-    internal class CSVStateCensusDAO
+    public class CSVStateCensusDAO
     {
         public string SrNo { get; set; }
         public string StateName { get; set; }

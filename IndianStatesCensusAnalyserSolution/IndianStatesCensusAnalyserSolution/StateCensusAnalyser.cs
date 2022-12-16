@@ -12,8 +12,20 @@ namespace IndianStatesCensusAnalyserSolution
 {
     public class StateCensusAnalyser
     {
-        public int ReadStateCencusData(string filePath)
+        public int ReadStateCencusAnalyserData(string filePath)
         {
+            //UC-1.2
+            if (!File.Exists(filePath))
+                throw new StateCensusAnalyserException(StateCensusAnalyserException.ExceptionType.FILE_INCORRECT, "Incorrect File Path");
+            //UC-1.3
+            if (!filePath.EndsWith(".csv"))
+                throw new StateCensusAnalyserException(StateCensusAnalyserException.ExceptionType.TYPE_INCORRECT, "File is incorecct");
+            //UC-1.4
+            var read = File.ReadAllLines(filePath);
+            string header = read[0];
+            if (header.Contains("/"))
+                throw new StateCensusAnalyserException(StateCensusAnalyserException.ExceptionType.DELIMETER, "Forwad slash is found");
+            //UC-1.1
             using (var reader = new StreamReader(filePath))
             using (var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
@@ -24,6 +36,16 @@ namespace IndianStatesCensusAnalyserSolution
                 }
                 return records.Count - 1;
             }
+        }
+        //UC-1.5
+        public bool ReadStateCencusAnalyserData(string filePath, string actualHeader)
+        {
+            var read = File.ReadAllLines(filePath);
+            string header = read[0];
+            if (header.Equals(actualHeader))
+                return true;
+            else
+                throw new StateCensusAnalyserException(StateCensusAnalyserException.ExceptionType.HEADER_INCORRECT, "Incorrect Header");
         }
     }
 }
