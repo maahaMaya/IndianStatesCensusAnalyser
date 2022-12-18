@@ -29,7 +29,7 @@ namespace IndianStatesCensusAnalyserSolution
             using (var reader = new StreamReader(filePath))
             using (var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
-                var records = csvReader.GetRecords<StateCensusAnalyserDAO>().ToList();
+                var records = csvReader.GetRecords<CSVStateCensusDAO>().ToList();
                 foreach (var data in records)
                 {
                     Console.WriteLine(data);
